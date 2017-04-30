@@ -16,7 +16,7 @@ public class C4_4_DiscoveringStreams extends DishDomainUsing {
         // -- Skip and limit
 
         List<String> names =
-                getDishesList().stream()
+                getDishList().stream()
                         .filter(d -> {
                             System.out.printf("Filtering '%s' (%b)\n", d.getName(), d.getCalories() > 300);
                             return d.getCalories() > 300;
@@ -34,7 +34,7 @@ public class C4_4_DiscoveringStreams extends DishDomainUsing {
 
         // -- distinct for objects
 
-        long count = getDishesList().stream()
+        long count = getDishList().stream()
                 .filter(d -> d.getCalories() > 300)
                 .distinct() // Uses hashcode and equals
                 .count();
@@ -54,7 +54,7 @@ public class C4_4_DiscoveringStreams extends DishDomainUsing {
         // -- twice map
 
         System.out.println(
-                getDishesList().stream()
+                getDishList().stream()
                         .map(Dish::getName)
                         .map(String::length)
                         .collect(toList())

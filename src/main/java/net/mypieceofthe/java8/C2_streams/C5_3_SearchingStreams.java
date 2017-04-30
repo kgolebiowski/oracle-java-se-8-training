@@ -13,10 +13,10 @@ import java.util.Optional;
 public class C5_3_SearchingStreams extends DishDomainUsing {
 
     public static void main(String[] args) {
-        if(getDishesList().stream().allMatch(dish -> dish.getCalories() < 1200))
+        if(getDishList().stream().allMatch(dish -> dish.getCalories() < 1200))
             System.out.println("All less than x!");
 
-        getDishesList().stream()
+        getDishList().stream()
                 .filter(Dish::isVegetarian)
                 .findAny()
                 .ifPresent(System.out::println);

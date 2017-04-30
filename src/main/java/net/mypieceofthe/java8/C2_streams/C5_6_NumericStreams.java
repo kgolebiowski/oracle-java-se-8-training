@@ -14,12 +14,12 @@ public class C5_6_NumericStreams extends DishDomainUsing {
 
     public static void main(String[] args) {
         System.out.println(
-                getDishesList().stream()
+                getDishList().stream()
                         .mapToInt(Dish::getCalories)
                         .sum()
         );
 
-        OptionalInt maxCalories = getDishesList().stream()
+        OptionalInt maxCalories = getDishList().stream()
                 .mapToInt(Dish::getCalories)
                 .max();
 

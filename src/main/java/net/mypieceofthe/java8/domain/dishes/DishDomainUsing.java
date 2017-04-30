@@ -13,7 +13,7 @@ public abstract class DishDomainUsing {
         dishFactory = new DishFactory();
     }
 
-    protected static List<Dish> getDishesList() {
+    protected static List<Dish> getDishList() {
         return dishFactory.getDishes();
     }
 }
