@@ -1,8 +1,6 @@
 package net.mypieceofthe.java8.C2_streams.Practice5_5;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 

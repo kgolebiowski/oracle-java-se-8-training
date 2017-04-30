@@ -1,5 +1,8 @@
 package net.mypieceofthe.java8.C2_streams;
 
+import net.mypieceofthe.java8.domain.dishes.Dish;
+import net.mypieceofthe.java8.domain.dishes.DishFactory;
+
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;

@@ -1,5 +1,8 @@
 package net.mypieceofthe.java8.C2_streams;
 
+import net.mypieceofthe.java8.domain.dishes.Dish;
+import net.mypieceofthe.java8.domain.dishes.DishFactory;
+
 /**
  * Created by kgolebiowski on 29/04/2017.
  */

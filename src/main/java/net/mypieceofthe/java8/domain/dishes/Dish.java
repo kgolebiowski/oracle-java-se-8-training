@@ -1,4 +1,4 @@
-package net.mypieceofthe.java8.C2_streams;
+package net.mypieceofthe.java8.domain.dishes;
 
 import java.util.Objects;
 

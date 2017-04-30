@@ -1,5 +1,8 @@
 package net.mypieceofthe.java8.C2_streams;
 
+import net.mypieceofthe.java8.domain.dishes.Dish;
+import net.mypieceofthe.java8.domain.dishes.DishFactory;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package net.mypieceofthe.java8.C2_streams;
+package net.mypieceofthe.java8.domain.dishes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class DishFactory {
     private List<Dish> dishes;
 
-    List<Dish> getDishes() {
+    public List<Dish> getDishes() {
         if (this.dishes == null)
             dishes = Arrays.asList(
                     new Dish("pork", false, 800, Dish.Type.MEAT),
