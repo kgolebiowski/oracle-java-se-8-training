@@ -1,7 +1,7 @@
 package net.mypieceofthe.java8.C2_streams;
 
 import net.mypieceofthe.java8.domain.dishes.Dish;
-import net.mypieceofthe.java8.domain.dishes.DishFactory;
+import net.mypieceofthe.java8.domain.dishes.DishDomainUsing;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,15 +10,13 @@ import java.util.Optional;
 /**
  * Created by kgolebiowski on 29/04/2017.
  */
-public class C5_3_SearchingStreams {
+public class C5_3_SearchingStreams extends DishDomainUsing {
 
     public static void main(String[] args) {
-        DishFactory factory = new DishFactory();
-
-        if(factory.getDishes().stream().allMatch(dish -> dish.getCalories() < 1200))
+        if(getDishesList().stream().allMatch(dish -> dish.getCalories() < 1200))
             System.out.println("All less than x!");
 
-        factory.getDishes().stream()
+        getDishesList().stream()
                 .filter(Dish::isVegetarian)
                 .findAny()
                 .ifPresent(System.out::println);

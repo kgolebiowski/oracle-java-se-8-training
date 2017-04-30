@@ -1,7 +1,7 @@
 package net.mypieceofthe.java8.C2_streams;
 
 import net.mypieceofthe.java8.domain.dishes.Dish;
-import net.mypieceofthe.java8.domain.dishes.DishFactory;
+import net.mypieceofthe.java8.domain.dishes.DishDomainUsing;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,14 +11,12 @@ import static java.util.stream.Collectors.toList;
 /**
  * Created by kgolebiowski on 28/04/2017.
  */
-public class C4_4_DiscoveringStreams {
+public class C4_4_DiscoveringStreams extends DishDomainUsing {
     public static void main(String[] args) {
-        DishFactory dishFactory = new DishFactory();
-
         // -- Skip and limit
 
         List<String> names =
-                dishFactory.getDishes().stream()
+                getDishesList().stream()
                         .filter(d -> {
                             System.out.printf("Filtering '%s' (%b)\n", d.getName(), d.getCalories() > 300);
                             return d.getCalories() > 300;
@@ -36,7 +34,7 @@ public class C4_4_DiscoveringStreams {
 
         // -- distinct for objects
 
-        long count = dishFactory.getDishes().stream()
+        long count = getDishesList().stream()
                 .filter(d -> d.getCalories() > 300)
                 .distinct() // Uses hashcode and equals
                 .count();
@@ -56,7 +54,7 @@ public class C4_4_DiscoveringStreams {
         // -- twice map
 
         System.out.println(
-                dishFactory.getDishes().stream()
+                getDishesList().stream()
                         .map(Dish::getName)
                         .map(String::length)
                         .collect(toList())

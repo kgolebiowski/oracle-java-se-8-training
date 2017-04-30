@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * Created by kgolebiowski on 28/04/2017.
  */
-public class DishFactory {
+class DishFactory {
     private List<Dish> dishes;
 
-    public List<Dish> getDishes() {
+    List<Dish> getDishes() {
         if (this.dishes == null)
             dishes = Arrays.asList(
                     new Dish("pork", false, 800, Dish.Type.MEAT),

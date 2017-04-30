@@ -1,7 +1,7 @@
 package net.mypieceofthe.java8.C2_streams;
 
 import net.mypieceofthe.java8.domain.dishes.Dish;
-import net.mypieceofthe.java8.domain.dishes.DishFactory;
+import net.mypieceofthe.java8.domain.dishes.DishDomainUsing;
 
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
@@ -10,18 +10,16 @@ import java.util.stream.Stream;
 /**
  * Created by kgolebiowski on 29/04/2017.
  */
-public class C5_6_NumericStreams {
+public class C5_6_NumericStreams extends DishDomainUsing {
 
     public static void main(String[] args) {
-        DishFactory factory = new DishFactory();
-
         System.out.println(
-                factory.getDishes().stream()
+                getDishesList().stream()
                         .mapToInt(Dish::getCalories)
                         .sum()
         );
 
-        OptionalInt maxCalories = factory.getDishes().stream()
+        OptionalInt maxCalories = getDishesList().stream()
                 .mapToInt(Dish::getCalories)
                 .max();
 
