@@ -8,6 +8,15 @@ import java.util.stream.Stream;
 
 /**
  * Created by kgolebiowski on 01/05/2017.
+ *
+ * Results on my Macbook Air (1,3 GHz Intel Core i5, JDK 1.8.0_131):
+ *
+ *                  Iterative: 19.73 ms
+ * Sequential infinite stream: 767.7 ms
+ *      Sequential LongStream: 32.01 ms
+ *   Parallel infinite stream: 10.18 s
+ *        Parallel LongStream: 29.35 ms
+ *
  */
 public class C7_1_ParallelStreams {
 
