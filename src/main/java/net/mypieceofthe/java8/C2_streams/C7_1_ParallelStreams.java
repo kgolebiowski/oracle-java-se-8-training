@@ -84,6 +84,9 @@ public class C7_1_ParallelStreams {
                         .parallel()
                         .reduce(0L, Long::sum));
 
+        testsMap.put("Custom ForkJoin",
+                () -> C7_2_ForkJoinSumCalculator.forkJoinSum(maxNumber));
+
         return this;
     }
 

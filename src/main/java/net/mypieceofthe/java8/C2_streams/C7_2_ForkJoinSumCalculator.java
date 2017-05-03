@@ -51,7 +51,9 @@ public class C7_2_ForkJoinSumCalculator extends RecursiveTask<Long> {
     }
 
     public static long forkJoinSum(long n) {
+        // This operation takes most of the time for this whole method
         long[] numbers = LongStream.rangeClosed(1, n).toArray();
+
         ForkJoinTask<Long> task = new C7_2_ForkJoinSumCalculator(numbers);
         return FORK_JOIN_POOL.invoke(task);
     }
