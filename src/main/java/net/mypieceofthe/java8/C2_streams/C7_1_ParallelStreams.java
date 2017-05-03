@@ -43,14 +43,20 @@ import java.util.stream.Stream;
  *
  */
 public class C7_1_ParallelStreams {
+    private final long maxNumber = 25_000_000;
+    private final Map<String, Runnable> testsMap = new LinkedHashMap<>();
+
+    private C7_1_ParallelStreams() {
+        System.out.println("Tests will be executed using " + Runtime.getRuntime().availableProcessors() + " threads\n");
+    }
 
     public static void main(String[] args) {
-        System.out.println("Tests will be executed using " + Runtime.getRuntime().availableProcessors() + " threads\n");
+        new C7_1_ParallelStreams()
+                .setUpTests()
+                .executeTestsAndPrintResults();
+    }
 
-        final long maxNumber = 25_000_000;
-
-        final Map<String, Runnable> testsMap = new LinkedHashMap<>();
-
+    private C7_1_ParallelStreams setUpTests() {
         testsMap.put("Iterative", () -> {
             long result = 0;
             for (long i = 1L; i <= maxNumber; i++) {
@@ -78,11 +84,16 @@ public class C7_1_ParallelStreams {
                         .parallel()
                         .reduce(0L, Long::sum));
 
-        testsMap.forEach((name, test) ->
-                System.out.printf("%30s: %s\n", name, runAndBenchmark(test)));
+        return this;
     }
 
-    private static Stopwatch runAndBenchmark(Runnable runnable) {
+    private void executeTestsAndPrintResults() {
+        testsMap.forEach((name, test) ->
+                System.out.printf("%30s: %s\n", name, runAndBenchmarkSingleTest(test)));
+
+    }
+
+    private Stopwatch runAndBenchmarkSingleTest(Runnable runnable) {
         Stopwatch sw = Stopwatch.createStarted();
         runnable.run();
         return sw.stop();
