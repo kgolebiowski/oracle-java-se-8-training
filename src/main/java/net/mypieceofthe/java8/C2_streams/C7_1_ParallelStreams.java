@@ -2,7 +2,8 @@ package net.mypieceofthe.java8.C2_streams;
 
 import com.google.common.base.Stopwatch;
 
-import java.util.function.UnaryOperator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -46,49 +47,42 @@ public class C7_1_ParallelStreams {
     public static void main(String[] args) {
         System.out.println("Tests will be executed using " + Runtime.getRuntime().availableProcessors() + " threads\n");
 
-        final long n = 25_000_000;
+        final long maxNumber = 25_000_000;
 
-        System.out.printf("%30s: %s\n", "Iterative",
-                benchmarkExecution(() -> {
-                    long result = 0;
-                    for (long i = 1L; i <= n; i++) {
-                        result += i;
-                    }
-                })
-        );
+        final Map<String, Runnable> testsMap = new LinkedHashMap<>();
 
-        UnaryOperator<Long> acc = i -> i + 1;
+        testsMap.put("Iterative", () -> {
+            long result = 0;
+            for (long i = 1L; i <= maxNumber; i++) {
+                result += i;
+            }
+        });
 
-        System.out.printf("%30s: %s\n", "Sequential infinite stream",
-                benchmarkExecution(() ->
-                        Stream.iterate(1L, acc)
-                                .limit(n)
-                                .reduce(0L, Long::sum))
-        );
+        testsMap.put("Sequential infinite stream",
+                () -> Stream.iterate(1L, i -> i + 1)
+                        .limit(maxNumber)
+                        .reduce(0L, Long::sum));
 
-        System.out.printf("%30s: %s\n", "Sequential LongStream",
-                benchmarkExecution(() ->
-                        LongStream.rangeClosed(1, n)
-                                .reduce(0L, Long::sum))
-        );
+        testsMap.put("Sequential LongStream",
+                () -> LongStream.rangeClosed(1, maxNumber)
+                        .reduce(0L, Long::sum));
 
-        System.out.printf("%30s: %s\n", "Parallel infinite stream",
-                benchmarkExecution(() ->
-                        Stream.iterate(1L, acc)
-                                .limit(n)
-                                .parallel()
-                                .reduce(0L, Long::sum))
-        );
+        testsMap.put("Parallel infinite stream",
+                () -> Stream.iterate(1L, i -> i + 1)
+                        .limit(maxNumber)
+                        .parallel()
+                        .reduce(0L, Long::sum));
 
-        System.out.printf("%30s: %s\n", "Parallel LongStream",
-                benchmarkExecution(() ->
-                        LongStream.rangeClosed(1, n)
-                                .parallel()
-                                .reduce(0L, Long::sum))
-        );
+        testsMap.put("Parallel LongStream",
+                () -> LongStream.rangeClosed(1, maxNumber)
+                        .parallel()
+                        .reduce(0L, Long::sum));
+
+        testsMap.forEach((name, test) ->
+                System.out.printf("%30s: %s\n", name, runAndBenchmark(test)));
     }
 
-    private static Stopwatch benchmarkExecution(Runnable runnable) {
+    private static Stopwatch runAndBenchmark(Runnable runnable) {
         Stopwatch sw = Stopwatch.createStarted();
         runnable.run();
         return sw.stop();
