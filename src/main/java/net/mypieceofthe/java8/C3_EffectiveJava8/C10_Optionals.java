@@ -10,15 +10,12 @@ import net.mypieceofthe.java8.domain.carsandinsurances.Person;
 
 import java.util.Optional;
 
+import static net.mypieceofthe.java8.domain.carsandinsurances.PeopleFactory.*;
+
 /**
  * Created by kgolebiowski on 04/05/2017.
  */
 public class C10_Optionals {
-    private Optional<Person> personWithCar = Optional.of(new Person(new Car(new Insurance("ABCD/123"))));
-    private Optional<Person> personWithoutCar = Optional.of(new Person());
-    private Optional<Person> personWithCarWithoutInsurance = Optional.of(new Person(new Car(null)));
-    private Optional<Person> personEmpty = Optional.empty();
-
     public static void main(String[] args) throws JsonProcessingException {
         new C10_Optionals()
                 .testBasicOptionals()
@@ -39,10 +36,10 @@ public class C10_Optionals {
 
     private C10_Optionals testOptionalsForDifferentStructures() {
         //Optional<Optional<Car>> car = somePerson.map(Person::getCar); // regular map returns Optional<Optional<Car>> !
-        System.out.println(getInsuranceNumber(personWithCar));
-        System.out.println(getInsuranceNumber(personWithoutCar));
-        System.out.println(getInsuranceNumber(personWithCarWithoutInsurance));
-        System.out.println(getInsuranceNumber(personEmpty));
+        System.out.println(getInsuranceNumber(getPersonWithCar()));
+        System.out.println(getInsuranceNumber(getPersonWithCar()));
+        System.out.println(getInsuranceNumber(getPersonWithCarWithoutInsurance()));
+        System.out.println(getInsuranceNumber(getPersonEmpty()));
 
         return this;
     }
@@ -57,9 +54,9 @@ public class C10_Optionals {
 
     private C10_Optionals testJacksonSerialization() throws JsonProcessingException {
         System.out.println(
-                getJacksonObjectMapper().writeValueAsString(personWithCar.get()));
+                getJacksonObjectMapper().writeValueAsString(getPersonWithCar().get()));
         System.out.println(
-                getJacksonObjectMapper().writeValueAsString(personWithCarWithoutInsurance.get()));
+                getJacksonObjectMapper().writeValueAsString(getPersonWithCarWithoutInsurance().get()));
         return this;
     }
 
