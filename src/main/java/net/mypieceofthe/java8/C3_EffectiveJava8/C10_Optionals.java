@@ -20,7 +20,8 @@ public class C10_Optionals {
         new C10_Optionals()
                 .testBasicOptionals()
                 .testOptionalsForDifferentStructures()
-                .testJacksonSerialization();
+                .testJacksonSerialization()
+                .testFiltering();
     }
 
     private C10_Optionals testBasicOptionals() {
@@ -64,5 +65,16 @@ public class C10_Optionals {
         return new ObjectMapper()
                 .registerModule(new Jdk8Module())
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+    }
+
+    private C10_Optionals testFiltering() {
+        getPersonWithCar()
+                .flatMap(Person::getCar)
+                .flatMap(Car::getInsurance)
+                .filter(insurance -> insurance.getName().equals("ABCD/123")) // true
+                //.filter(insurance -> insurance.getName().equals("adsf"))
+                .ifPresent(insurance -> System.out.println("OK !"));
+
+        return this;
     }
 }
