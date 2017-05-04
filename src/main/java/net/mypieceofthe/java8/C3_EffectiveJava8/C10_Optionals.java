@@ -1,11 +1,12 @@
 package net.mypieceofthe.java8.C3_EffectiveJava8;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import net.mypieceofthe.java8.domain.carsandinsurances.Car;
+import net.mypieceofthe.java8.domain.carsandinsurances.Insurance;
+import net.mypieceofthe.java8.domain.carsandinsurances.Person;
 
 import java.util.Optional;
 
@@ -65,55 +66,6 @@ public class C10_Optionals {
     private ObjectMapper getJacksonObjectMapper() {
         return new ObjectMapper()
                 .registerModule(new Jdk8Module())
-                .setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.ANY)
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-    }
-}
-
-class Person {
-    private Optional<Car> car;
-
-    Person() {
-        this(null);
-    }
-
-    Person(Car car) {
-        this.car = Optional.ofNullable(car);
-    }
-
-    Optional<Car> getCar() {
-        return car;
-    }
-
-    String getPersonName() {
-        return "John Smith";
-    }
-}
-
-class Car {
-    private Optional<Insurance> insurance;
-
-    Car(Insurance insurance) {
-        this.insurance = Optional.ofNullable(insurance);
-    }
-
-    Optional<Insurance> getInsurance() {
-        return insurance;
-    }
-
-    public String getRegNumber() {
-        return "123 ABCD";
-    }
-}
-
-class Insurance {
-    private String name;
-
-    String getName() {
-        return name;
-    }
-
-    Insurance(String name) {
-        this.name = name;
     }
 }
