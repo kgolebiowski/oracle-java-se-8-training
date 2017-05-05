@@ -38,7 +38,7 @@ public class C10_Optionals {
     private C10_Optionals testOptionalsForDifferentStructures() {
         //Optional<Optional<Car>> car = somePerson.map(Person::getCar); // regular map returns Optional<Optional<Car>> !
         System.out.println(getInsuranceNumber(getPersonWithCar()));
-        System.out.println(getInsuranceNumber(getPersonWithCar()));
+        System.out.println(getInsuranceNumber(getPersonWithoutCar()));
         System.out.println(getInsuranceNumber(getPersonWithCarWithoutInsurance()));
         System.out.println(getInsuranceNumber(getPersonEmpty()));
 
