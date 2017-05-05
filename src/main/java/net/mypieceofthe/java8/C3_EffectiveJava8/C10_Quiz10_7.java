@@ -1,5 +1,8 @@
 package net.mypieceofthe.java8.C3_EffectiveJava8;
 
+import com.google.common.primitives.Ints;
+
+import java.util.Optional;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
@@ -22,13 +25,23 @@ public class C10_Quiz10_7 {
     }
 
     private void runQuizTests() {
-        assertEquals(5, readDuration(props, "a"));
-        assertEquals(0, readDuration(props, "b"));
-        assertEquals(0, readDuration(props, "c"));
-        assertEquals(0, readDuration(props, "d"));
-    }
+        //DurationPropertyReader underTest = new IterativeDurationPropertyReader();
+        DurationPropertyReader underTest = new OptionalBasedDurationPropertyReader();
 
-    private int readDuration(Properties props, String name) {
+        assertEquals(5, underTest.readDuration(props, "a"));
+        assertEquals(0, underTest.readDuration(props, "b"));
+        assertEquals(0, underTest.readDuration(props, "c"));
+        assertEquals(0, underTest.readDuration(props, "d"));
+    }
+}
+
+interface DurationPropertyReader {
+    int readDuration(Properties props, String name);
+}
+
+class IterativeDurationPropertyReader implements DurationPropertyReader {
+    @Override
+    public int readDuration(Properties props, String name) {
         String value = props.getProperty(name);
         if (value != null) {
             try {
@@ -42,3 +55,24 @@ public class C10_Quiz10_7 {
         return 0;
     }
 }
+
+class OptionalBasedDurationPropertyReader implements DurationPropertyReader {
+    @Override
+    public int readDuration(Properties props, String name) {
+        return Optional.ofNullable(props.getProperty(name))
+                .map(Ints::tryParse).filter(value -> value > 0).orElse(0);
+    }
+}
+
+
+/*
+    // Helper method for parsing integers to Optionals if Guava is absent
+
+    private Optional<Integer> parseInt(String input) {
+        try {
+            return Optional.of(input).map(Integer::parseInt);
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+ */
