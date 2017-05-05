@@ -1,37 +1,56 @@
 package net.mypieceofthe.java8.C3_EffectiveJava8;
 
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by kgolebiowski on 05/05/2017.
  */
 public class C11_CompletableFutures {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    private Executor executor = Executors.newCachedThreadPool(this::getThreadFactory);
+
+    public static void main(String[] args) {
         new C11_CompletableFutures().execute();
     }
 
-    private void execute() throws ExecutionException, InterruptedException {
-        System.out.println("MAIN Start " + Thread.currentThread().getName());
+    private void execute() {
+        System.out.println("Running with " + Runtime.getRuntime().availableProcessors() + " threads");
 
+        List<CompletableFuture<Void>> futures =
+                Stream.generate(SomeComputingClass::new).limit(100)
+                .map(computer -> CompletableFuture.supplyAsync(computer::compute, executor))
+                .map(cf -> cf.thenAccept(s -> System.out.println("Finished: " + s)))
+                .collect(Collectors.toList());
 
-        CompletableFuture<String> cf =
-                CompletableFuture.supplyAsync(this::computeSomething)
-                        .thenApply(s -> "The result: " + s);
+        System.out.println("Generated and waiting");
 
-        System.out.println(cf.get());
+        futures.forEach(CompletableFuture::join);
 
-        System.out.println("MAIN End");
+        System.out.println("END");
     }
 
-    private String computeSomething() {
+    private Thread getThreadFactory(Runnable r) {
+        Thread t = new Thread(r);
+        t.setDaemon(true);
+        return t;
+    }
+}
+
+class SomeComputingClass {
+    String compute() {
+        long sleepTime = 1000L + new Random().nextInt(1000);
         try {
-            System.out.println("RUN Start " + Thread.currentThread().getName());
-            Thread.sleep(1000L);
-            System.out.println("RUN End");
+            Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "computed";
+        return String.format("My name is '%s' and I was sleeping for '%d'",
+                Thread.currentThread().getName(), sleepTime);
     }
 }
