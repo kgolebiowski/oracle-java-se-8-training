@@ -44,12 +44,9 @@ class IterativeDurationPropertyReader implements DurationPropertyReader {
     public int readDuration(Properties props, String name) {
         String value = props.getProperty(name);
         if (value != null) {
-            try {
-                int i = Integer.parseInt(value);
-                if (i > 0) {
-                    return i;
-                }
-            } catch (NumberFormatException nfe) {
+            Integer i = Ints.tryParse(value);
+            if (i != null && i > 0) {
+                return i;
             }
         }
         return 0;
