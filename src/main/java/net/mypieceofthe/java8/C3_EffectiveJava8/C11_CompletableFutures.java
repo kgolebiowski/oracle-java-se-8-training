@@ -3,7 +3,6 @@ package net.mypieceofthe.java8.C3_EffectiveJava8;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
