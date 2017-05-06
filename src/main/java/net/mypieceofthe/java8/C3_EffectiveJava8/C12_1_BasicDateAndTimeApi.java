@@ -52,11 +52,6 @@ public class C12_1_BasicDateAndTimeApi {
                 localTime.atDate(localDate),
                 LocalDateTime.now().toLocalTime());
 
-        LocalDate date = LocalDate.of(2014, 3, 18);
-        date = date.with(ChronoField.MONTH_OF_YEAR, 9);
-        date = date.plusYears(2).minusDays(10);
-        System.out.println(">> " + date);
-
         return this;
     }
 
