@@ -1,11 +1,9 @@
 package net.mypieceofthe.java8.C3_EffectiveJava8;
 
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -23,15 +21,15 @@ public class C11_CompletableFutures {
     private void execute() {
         System.out.println("Runtime returns '" + Runtime.getRuntime().availableProcessors() + "' processors/cores");
 
-        List<CompletableFuture<Void>> futures = Stream.generate(SomeComputingClass::new)
+        CompletableFuture[] futures = Stream.generate(SomeComputingClass::new)
                 .limit(100)
                 .map(computer -> CompletableFuture.supplyAsync(computer::compute, executor))
                 .map(cf -> cf.thenAccept(s -> System.out.println("Finished: " + s)))
-                .collect(Collectors.toList());
+                .toArray(CompletableFuture[]::new);
 
         System.out.println("Generated and waiting");
 
-        futures.forEach(CompletableFuture::join);
+        CompletableFuture.allOf(futures).join();
 
         System.out.println("END");
     }
