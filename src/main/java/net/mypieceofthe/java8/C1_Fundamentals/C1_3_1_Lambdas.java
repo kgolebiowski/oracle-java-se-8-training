@@ -12,9 +12,17 @@ import java.util.function.Supplier;
  */
 public class C1_3_1_Lambdas {
     public static void main(String[] args) {
+        new C1_3_1_Lambdas()
+                .basicLambdasFromJavaUtilFunction()
+                .oldJavaAPILambdified()
+                .customInterface();
+    }
 
-        /* Some lambdas for generic interfaces from java.util.function */
+    public Callable<String> execute() {
+        return () -> "adsf";
+    }
 
+    private C1_3_1_Lambdas basicLambdasFromJavaUtilFunction() {
         Predicate<String> notEmptyPredicate = (String str) -> !str.isEmpty();
 
         Supplier l1 = () -> "asdf from supplier";
@@ -25,15 +33,17 @@ public class C1_3_1_Lambdas {
             return "asdf" + 5;
         };
 
-        // Supplier l3 = () -> { "asdf" + 5; }; // { } require 'return' statement
+        //Supplier l3 = () -> { "asdf" + 5; }; // { } require 'return' statement
 
         Function<Integer, String> l4 = (Integer a) -> {
             System.out.println("asdf" + a);
             return "asdf";
         };
 
-        /* Lambdas for other usefull Java (functional) interfaces */
+        return this;
+    }
 
+    private C1_3_1_Lambdas oldJavaAPILambdified() {
         Comparator<List> listComparator =
                 (List o1, List o2) -> new Integer(o1.size()).compareTo(o2.size());
 
@@ -42,15 +52,18 @@ public class C1_3_1_Lambdas {
 
         new Thread(() -> System.out.println("siema")).run();
 
-        /* Lambdas for other custom functional interface */
+        return this;
+    }
 
+    private C1_3_1_Lambdas customInterface() {
         MyFunctionalInterface mfi = (String a) -> "This comes from lambda " + a;
 
         System.out.println(mfi.getClass() + " : " + mfi.test("oo"));
-    }
 
-    public Callable<String> execute() {
-        return () -> "adsf";
+        //mfi.someStaticMethod() // Won't compile as static methods can be executed on interfaces only
+        MyFunctionalInterface.someStaticMethod();
+
+        return this;
     }
 }
 
@@ -59,11 +72,17 @@ interface MyFunctionalInterface {
 
     String test(String a);
 
-    boolean equals(Object obj); // ?????
+    // java.lang.Object methods can be here as well (but why? :) )
+    boolean equals(Object obj);
+    String toString();
 
     // String test2(String f); // Fails to compile as FunctionalInterface defines only one abstract method
 
     default String testDefault() {
         return "";
+    }
+
+    static void someStaticMethod() {
+        System.out.println("I'm a static method on " + MyFunctionalInterface.class.getName());
     }
 }
