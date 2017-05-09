@@ -13,22 +13,22 @@ public class C8_1_RefactoringToLambdas {
     int instanceVar = 5;
 
     public static void main(String[] args) {
-        new C8_1_RefactoringToLambdas().runAsObject();
+        new C8_1_RefactoringToLambdas()
+                .basicLambdas()
+                .thisAndVariablesScopeInLambdas()
+                .lambdaClashesFromOverloading();
     }
 
-    private void runAsObject() {
-
+    private C8_1_RefactoringToLambdas basicLambdas() {
         _log.error(Thread::activeCount); // Deferred Thread.activeCount() method execution
-
-        thisAndVariablesScopeInLambdas();
-        lambdaClashesFromOverloading();
+        return this;
     }
 
-    private void thisAndVariablesScopeInLambdas() {
+    private C8_1_RefactoringToLambdas thisAndVariablesScopeInLambdas() {
         int a = 10;
 
         Runnable r1 = () -> {
-            //int a = 2; // Error:(13, 17) java: variable a is already defined in method main(java.lang.String[])
+            //int a = 2; // Error:(13, 17) java: variable a is already defined in the scope
             System.out.println(a);
             System.out.println(this); // Refers to enclosing object
         };
@@ -44,11 +44,14 @@ public class C8_1_RefactoringToLambdas {
         };
 
         r2.run();
+
+        return this;
     }
 
-    private void lambdaClashesFromOverloading() {
+    private C8_1_RefactoringToLambdas lambdaClashesFromOverloading() {
         //doSomething(() -> System.out.println("asdf")); // Ambiguous method call, requires explicit casting
         doSomething((TheInterfaceThatLooksTheSameAsRunnable) () -> System.out.println("Message"));
+        return this;
     }
 
     public void doSomething(Runnable r) {
