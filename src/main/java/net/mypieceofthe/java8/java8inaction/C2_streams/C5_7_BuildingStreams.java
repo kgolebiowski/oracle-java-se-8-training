@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
@@ -55,6 +57,22 @@ public class C5_7_BuildingStreams {
         DoubleStream.generate(Math::random)
                 .mapToInt(r -> (int) (r * 10000))
                 .limit(10)
+                .forEach(System.out::println);
+
+        System.out.println();
+
+        // -- Pre/Post incrementation
+        // OCP Study Guide: Chapter 4 Functional Programming, review question 11
+
+        UnaryOperator<Integer> preIncrement = x -> ++x;
+        UnaryOperator<Integer> postIncrement = x -> x++;
+
+        Stream.of(preIncrement, postIncrement)
+                .map(operator ->
+                        Stream.iterate(1, operator)
+                                .limit(5)
+                                .map(Object::toString)
+                                .collect(Collectors.joining()))
                 .forEach(System.out::println);
     }
 }

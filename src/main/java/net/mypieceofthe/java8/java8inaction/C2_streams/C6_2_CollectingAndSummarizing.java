@@ -4,6 +4,7 @@ import net.mypieceofthe.java8.java8inaction.domain.dishes.Dish;
 import net.mypieceofthe.java8.java8inaction.domain.dishes.DishDomainUsing;
 
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
@@ -60,6 +61,18 @@ public class C6_2_CollectingAndSummarizing extends DishDomainUsing {
                         .map(Dish::getName)
                         .collect(joining(", "))
         );
+
+        // OCP Study Guide: Chapter 4 Functional Programming, review question 11
+        // Does not compile as Collectors.joining() expect the String (see next)
+        //Stream.iterate(1, x -> x = x + 1)
+        //        .limit(5)
+        //        .collect(Collectors.joining());
+
+        System.out.println(
+                Stream.iterate(1, x -> x = x + 1)
+                        .limit(5)
+                        .map(Object::toString)
+                        .collect(Collectors.joining()));
 
         return this;
     }
