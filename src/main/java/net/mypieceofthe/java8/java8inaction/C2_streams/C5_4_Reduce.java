@@ -33,6 +33,18 @@ public class C5_4_Reduce extends DishDomainUsing {
 
         System.out.println(sumWithReduceOnly);
 
+        Integer sumWithReduceOnlyParallel = getDishList().stream().parallel()
+                .reduce(0,
+                        (sum, dish) -> {
+                            System.out.println("Called accumulator");
+                            return sum + dish.getCalories();
+                        }, (s1, s2) -> {
+                            System.out.println("Called combiner (only for parallel streams)");
+                            return s1 + s2;
+                        });
+
+        System.out.println(sumWithReduceOnlyParallel);
+
         return this;
     }
 
