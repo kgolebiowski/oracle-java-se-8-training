@@ -19,6 +19,7 @@ public class C6_2_CollectingAndSummarizing extends DishDomainUsing {
         new C6_2_CollectingAndSummarizing()
                 .numericCollectors()
                 .stringCollectors()
+                .toMapCollector()
                 .reducing();
 
     }
@@ -73,6 +74,14 @@ public class C6_2_CollectingAndSummarizing extends DishDomainUsing {
                         .limit(5)
                         .map(Object::toString)
                         .collect(Collectors.joining()));
+
+        return this;
+    }
+
+    private C6_2_CollectingAndSummarizing toMapCollector() {
+
+        System.out.println("Collected map: " + getDishList().stream()
+                .collect(Collectors.toMap(Dish::getName, Dish::getType)));
 
         return this;
     }
