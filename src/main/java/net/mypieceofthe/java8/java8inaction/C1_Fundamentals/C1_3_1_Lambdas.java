@@ -1,9 +1,12 @@
 package net.mypieceofthe.java8.java8inaction.C1_Fundamentals;
 
+import net.mypieceofthe.java8.java8inaction.domain.dishes.Dish;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
+import java.util.function.IntSupplier;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -15,7 +18,8 @@ public class C1_3_1_Lambdas {
         new C1_3_1_Lambdas()
                 .basicLambdasFromJavaUtilFunction()
                 .oldJavaAPILambdified()
-                .customInterface();
+                .customInterface()
+                .getterAsMethodReference();
     }
 
     public Callable<String> execute() {
@@ -65,15 +69,26 @@ public class C1_3_1_Lambdas {
 
         return this;
     }
+
+    private C1_3_1_Lambdas getterAsMethodReference() {
+        Dish beef = new Dish("beef", false, 700, Dish.Type.MEAT);
+
+        IntSupplier is = beef::getCalories;
+
+        System.out.println(is.getAsInt());
+
+        return this;
+    }
 }
 
-@FunctionalInterface // Optional
+@FunctionalInterface
 interface MyFunctionalInterface {
 
     String test(String a);
 
     // java.lang.Object methods can be here as well (but why? :) )
     boolean equals(Object obj);
+
     String toString();
 
     // String test2(String f); // Fails to compile as FunctionalInterface defines only one abstract method
