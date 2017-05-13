@@ -28,6 +28,13 @@ public class C12_1_ComparingDates {
 
         System.out.println();
 
+        // Negative result
+        System.out.println(Period.between(
+                LocalDate.of(2015, Month.SEPTEMBER, 2), // Later
+                LocalDate.of(2015, Month.SEPTEMBER, 1))); // Sooner
+
+        System.out.println();
+
         // OCP Study Guide: Chapter 5 Dates, Strings, Localization; Review question 15
         String m1 = Duration.of(1, ChronoUnit.MINUTES).toString();
         String m2 = Duration.ofMinutes(1).toString();
