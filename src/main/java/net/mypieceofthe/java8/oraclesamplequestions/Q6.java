@@ -1,4 +1,4 @@
-package oraclesamplequestions;
+package net.mypieceofthe.java8.oraclesamplequestions;
 
 import java.io.IOException;
 import java.nio.file.Files;

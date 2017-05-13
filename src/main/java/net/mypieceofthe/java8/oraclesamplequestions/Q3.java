@@ -1,4 +1,4 @@
-package oraclesamplequestions;
+package net.mypieceofthe.java8.oraclesamplequestions;
 
 import java.util.Arrays;
 import java.util.List;
