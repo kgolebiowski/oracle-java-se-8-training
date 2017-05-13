@@ -4,6 +4,7 @@ import net.mypieceofthe.java8.java8inaction.domain.dishes.Dish;
 import net.mypieceofthe.java8.java8inaction.domain.dishes.DishDomainUsing;
 
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -26,6 +27,11 @@ public class C5_6_NumericStreams extends DishDomainUsing {
         maxCalories.ifPresent(System.out::println);
 
         // -- Ranges
+
+        System.out.println(
+                IntStream.range(1, 10).mapToObj(Integer::toString).collect(Collectors.joining(",")));
+        System.out.println(
+                IntStream.rangeClosed(1, 10).mapToObj(Integer::toString).collect(Collectors.joining(",")));
 
         IntStream evenNumbers = IntStream.rangeClosed(0, 100)
                 .filter(n -> n % 2 == 0);
