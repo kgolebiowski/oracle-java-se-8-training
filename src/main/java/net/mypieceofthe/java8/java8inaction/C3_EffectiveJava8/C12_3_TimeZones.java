@@ -36,6 +36,10 @@ public class C12_3_TimeZones {
 
         System.out.println("Local time with offset " + now.atOffset(currentOffset));
 
+        ZoneId plusTwoZone = ZoneId.of("GMT+2");
+        System.out.printf("This is proper timezone as well %s (%s)\n",
+                plusTwoZone, now.atZone(plusTwoZone));
+
         return this;
     }
 
