@@ -3,6 +3,7 @@ package net.mypieceofthe.java8.java8inaction.C2_streams;
 import net.mypieceofthe.java8.java8inaction.domain.dishes.Dish;
 import net.mypieceofthe.java8.java8inaction.domain.dishes.DishDomainUsing;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,7 +21,8 @@ public class C6_2_CollectingAndSummarizing extends DishDomainUsing {
                 .numericCollectors()
                 .stringCollectors()
                 .toMapCollector()
-                .reducing();
+                .reducing()
+                .forEachAndOrdered();
 
     }
 
@@ -106,6 +108,26 @@ public class C6_2_CollectingAndSummarizing extends DishDomainUsing {
                 .collect(Collectors.reducing((s1, s2) -> s1 + s2)).get();
         String shortMenu2 = getDishList().stream()
                 .collect(Collectors.reducing("", Dish::getName, (s1, s2) -> s1 + s2));
+
+        return this;
+    }
+
+    private C6_2_CollectingAndSummarizing forEachAndOrdered() {
+        System.out.println();
+
+        Integer[] arrayOfNumbers = {9, 8, 1, 5, 2, 3, 4, 7};
+
+        System.out.println("forEach");
+        Arrays.stream(arrayOfNumbers).forEach(System.out::print);
+
+        System.out.println("\n\nforEach parallel (different result every execution)");
+        Arrays.stream(arrayOfNumbers).parallel().forEach(System.out::print);
+
+        System.out.println("\n\nforEachOrdered parallel (same result every execution)");
+        Arrays.stream(arrayOfNumbers).parallel().forEachOrdered(System.out::print);
+
+        System.out.println("\n\nsorted");
+        Arrays.stream(arrayOfNumbers).sorted().forEach(System.out::print);
 
         return this;
     }
