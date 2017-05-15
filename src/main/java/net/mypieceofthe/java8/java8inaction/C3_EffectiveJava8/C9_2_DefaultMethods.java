@@ -27,6 +27,13 @@ interface C {
     }
 }
 
+// enthuware 1477
+class SomeConcreteClass2 implements A, B {
+    void helloFromBIsMoreSpecific() {
+        this.hello();
+    }
+}
+
 class SomeConcreteClass implements B, A, C {
     @Override
     public void hello() {
